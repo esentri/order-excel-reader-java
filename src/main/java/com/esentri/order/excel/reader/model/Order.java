@@ -1,32 +1,32 @@
-package com.esentri.order.excel.reader;
+package com.esentri.order.excel.reader.model;
 
-class Order {
+public class Order {
 
-    private Company company;
-    private Department department;
-    private Article article;
-    private int amount;
+    private final Company company;
+    private final Department department;
+    private final Article article;
+    private final int amount;
 
-    Order(Company company, Department department, Article article, int amount) {
+    public Order(Company company, Department department, Article article, int amount) {
         this.company = company;
         this.department = department;
         this.article = article;
         this.amount = amount;
     }
 
-    Company getCompany() {
+    public Company getCompany() {
         return company;
     }
 
-    Department getDepartment() {
+    public Department getDepartment() {
         return department;
     }
 
-    Article getArticle() {
+    public Article getArticle() {
         return article;
     }
 
-    int getAmount() {
+    public int getAmount() {
         return amount;
     }
 

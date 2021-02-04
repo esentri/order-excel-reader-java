@@ -1,8 +1,8 @@
-package com.esentri.order.excel.reader;
+package com.esentri.order.excel.reader.model;
 
 import java.util.Arrays;
 
-enum Company {
+public enum Company {
 
     TECICON("Tecicon"),
     DONTON("Donton"),
@@ -17,11 +17,11 @@ enum Company {
         this.name = name;
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
-    static Company fromString(String string) {
+    public static Company fromString(String string) {
         return Arrays.stream(Company.values())
             .filter(company -> company.name.equalsIgnoreCase(string))
             .findFirst()

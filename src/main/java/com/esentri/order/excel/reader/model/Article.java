@@ -1,8 +1,8 @@
-package com.esentri.order.excel.reader;
+package com.esentri.order.excel.reader.model;
 
 import java.util.Arrays;
 
-enum Article {
+public enum Article {
 
     TONER("Toner", 134.79),
     PAPER_CLIP("Büroklammern", 1.24),
@@ -19,15 +19,15 @@ enum Article {
         this.pricePerPiece = pricePerPiece;
     }
 
-    String getName() {
+    public String getName() {
         return this.name;
     }
 
-    double getPricePerPiece() {
+    public double getPricePerPiece() {
         return this.pricePerPiece;
     }
 
-    static Article fromString(String string) {
+    public static Article fromString(String string) {
         return Arrays.stream(Article.values())
             .filter(article -> article.name.equalsIgnoreCase(string))
             .findFirst()
