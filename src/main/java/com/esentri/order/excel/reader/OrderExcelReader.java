@@ -18,7 +18,7 @@ public class OrderExcelReader {
         long start = System.nanoTime();
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 
-        try (InputStream inp = classloader.getResourceAsStream("order_overview.xlsx")) {
+        try (InputStream inp = classloader.getResourceAsStream("order_overview_resource.xlsx")) {
             assert inp != null;
             try (Workbook wb = WorkbookFactory.create(inp)) {
                 final Sheet sheetAt = wb.getSheetAt(0);
