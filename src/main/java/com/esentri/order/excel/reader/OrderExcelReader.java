@@ -4,15 +4,15 @@ import com.esentri.order.excel.reader.model.Article;
 import com.esentri.order.excel.reader.model.Company;
 import com.esentri.order.excel.reader.model.Department;
 import com.esentri.order.excel.reader.model.Order;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 final class OrderExcelReader {
@@ -26,14 +26,12 @@ final class OrderExcelReader {
     }
 
     void readOrderAndCalculateOutput() {
-        final Path pathToFile = Paths.get(filePath);
-        try (InputStream inp = Files.newInputStream(pathToFile)) {
-            try (Workbook wb = WorkbookFactory.create(inp)) {
-                List<Order> orders = parseOrdersFromOrderExcel(wb);
-                writeOrderExcel(orders);
-                writePivotMap(orders);
-            }
-        } catch (IOException e) {
+        try (Workbook wb = WorkbookFactory.create(new File(filePath));) {
+            List<Order> orders = parseOrdersFromOrderExcel(wb);
+            writeOrderExcel(orders);
+            writePivotMap(orders);
+        } catch (
+            IOException e) {
             logger.error("Fehler beim Lesen der Datei", e);
         }
     }

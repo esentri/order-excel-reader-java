@@ -74,7 +74,7 @@
                     <archive>
                         <manifest>
                             <mainClass>
-                                com.esentri.order.excel.generator.ExcelGenerator
+                                com.esentri.order.excel.reader.OrderExcelReaderApplication
                             </mainClass>
                         </manifest>
                     </archive>
