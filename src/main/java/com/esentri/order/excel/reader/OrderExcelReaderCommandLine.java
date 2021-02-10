@@ -48,7 +48,7 @@ final class OrderExcelReaderCommandLine {
     }
 
     private Options getOptions() {
-        options.addOption(FILENAME_CMD_OPTION_SHORT, FILENAME_CMD_OPTION, true, "Path to excel");
+        Options options = new Options().addOption(FILENAME_CMD_OPTION_SHORT, FILENAME_CMD_OPTION, true, "Path to excel");
         return options;
     }
 }
