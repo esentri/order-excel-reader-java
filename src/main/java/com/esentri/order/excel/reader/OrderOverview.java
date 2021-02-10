@@ -10,24 +10,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-final class OrderOverviewSummary {
+final class OrderOverview {
 
     private final List<Order> orders;
 
-    OrderOverviewSummary(List<Order> orders) {
+    OrderOverview(List<Order> orders) {
         this.orders = orders;
     }
 
-    void createOverviewSummary() throws IOException {
+    void createOverview() throws IOException {
         try (
-            final Workbook outwb = new XSSFWorkbook();
+            final Workbook orderOverviewSummary = new XSSFWorkbook();
             final FileOutputStream fileOut = new FileOutputStream("order_overview_complete.xlsx")
         ) {
-            Sheet sheet = outwb.createSheet("Bestellungen");
+            Sheet sheet = orderOverviewSummary.createSheet("Bestellungen");
             Row row = sheet.createRow(0);
             CaptionUtil.generateCaptions(row, "Firma", "Abteilung", "Artikel", "Menge", "Einzelpreis", "Gesamtpreis");
             generateColumns(orders, sheet);
-            outwb.write(fileOut);
+            orderOverviewSummary.write(fileOut);
         }
     }
 

@@ -4,55 +4,25 @@ import org.apache.commons.cli.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OrderExcelReaderApplication {
+public final class OrderExcelReaderApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderExcelReaderApplication.class);
-    private static final String FILENAME_CMD_OPTION = "filename";
-    private static final String FILENAME_CMD_OPTION_SHORT = "f";
 
-    public static void main(String... args) {
-        long start = System.nanoTime();
+    public static void main(final String... args) {
+        final long start = System.nanoTime();
+        final OrderExcelReaderCommandLine orderExcelReaderCommandLine = new OrderExcelReaderCommandLine();
+        orderExcelReaderCommandLine.parseArguments(args);
 
-        CommandLine commandLine = parseArguments(args);
-
-        if (commandLine.hasOption(FILENAME_CMD_OPTION)) {
-            final String filePath = commandLine.getOptionValue(FILENAME_CMD_OPTION);
-            OrderExcelReader orderExcelReader = new OrderExcelReader(filePath);
+        if (orderExcelReaderCommandLine.hasFilename()) {
+            final String filePath = orderExcelReaderCommandLine.getFilenameCommandOption();
+            final OrderExcelReader orderExcelReader = new OrderExcelReader(filePath);
             orderExcelReader.readOrderAndCalculateOutput();
         } else {
-            printHelp();
+            orderExcelReaderCommandLine.printHelp();
         }
 
-        long end = System.nanoTime();
+        final long end = System.nanoTime();
         logger.info("Total in Nanoseconds: {}", end - start);
     }
 
-    private static void printHelp() {
-        Options options = getOptions();
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("OrderExcelReader", options, true);
-    }
-
-    private static CommandLine parseArguments(String[] args) {
-
-        Options options = getOptions();
-        CommandLine cmd = null;
-        CommandLineParser commandLineParser = new DefaultParser();
-
-        try {
-            cmd = commandLineParser.parse(options, args);
-        } catch (ParseException e) {
-            logger.error("Fehler beim Einlesen der Parameter", e);
-            printHelp();
-            System.exit(1);
-        }
-
-        return cmd;
-    }
-
-    private static Options getOptions() {
-        Options options = new Options();
-        options.addOption(FILENAME_CMD_OPTION_SHORT, FILENAME_CMD_OPTION, true, "Path to excel");
-        return options;
-    }
 }
