@@ -3,3 +3,8 @@ target/
 order-excel-reader-java.iml
 order_overview_complete.xlsx
 order_pivot.xlsx
+output-clojure.xlsx
+.classpath
+.factorypath
+.project
+.settings/
