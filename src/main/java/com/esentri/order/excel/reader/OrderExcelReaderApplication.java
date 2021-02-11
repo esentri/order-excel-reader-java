@@ -22,7 +22,7 @@ public final class OrderExcelReaderApplication {
         orderExcelReader.readOrderAndCalculateOutput();
 
         final long end = System.nanoTime();
-        logger.info("Total in Nanoseconds: {}", end - start);
+        logger.info("Java Total in Nanoseconds: {}", end - start);
     }
 
 }
