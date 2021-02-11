@@ -13,13 +13,13 @@ public final class OrderExcelReaderApplication {
         final OrderExcelReaderCommandLine orderExcelReaderCommandLine = new OrderExcelReaderCommandLine();
         orderExcelReaderCommandLine.parseArguments(args);
 
-        if (orderExcelReaderCommandLine.hasFilename()) {
-            final String filePath = orderExcelReaderCommandLine.getFilenameCommandOption();
-            final OrderExcelReader orderExcelReader = new OrderExcelReader(filePath);
-            orderExcelReader.readOrderAndCalculateOutput();
-        } else {
+        if (!orderExcelReaderCommandLine.hasFilename()) {
             orderExcelReaderCommandLine.printHelp();
+            return;
         }
+        final String filePath = orderExcelReaderCommandLine.getFilenameCommandOption();
+        final OrderExcelReader orderExcelReader = new OrderExcelReader(filePath);
+        orderExcelReader.readOrderAndCalculateOutput();
 
         final long end = System.nanoTime();
         logger.info("Total in Nanoseconds: {}", end - start);
