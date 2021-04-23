@@ -17,30 +17,25 @@ import java.util.Map;
 
 final class PivotExcel {
 
+    private final Workbook workbook;
     private final List<Order> orders;
 
-    PivotExcel(List<Order> orders) {
+    PivotExcel(Workbook workbook, List<Order> orders) {
+        this.workbook = workbook;
         this.orders = orders;
     }
 
-    public void writePivotMap() throws IOException {
+    public void writePivotMap() {
         Map<Company, Map<Article, Integer>> pivotMap = createPivotMap(orders);
         writePivotOrderExcel(pivotMap);
     }
 
-    private void writePivotOrderExcel(Map<Company, Map<Article, Integer>> leMap) throws IOException {
-        try (
-            final Workbook finalwb = new XSSFWorkbook();
-            final FileOutputStream fileOut = new FileOutputStream("order_pivot.xlsx")
-        ) {
-            Sheet sheet = finalwb.createSheet("Zusammenfassung");
-            Row row = sheet.createRow(0);
-            CaptionUtil.generateCaptions(row, "Firma", "Artikel", "Gesamtmenge", "Gesamtpreis");
-            leMap.forEach((key, value) -> value.forEach((innerKey, val) -> {
-                addRow(sheet, key, innerKey, val);
-            }));
-            finalwb.write(fileOut);
-        }
+    private void writePivotOrderExcel(Map<Company, Map<Article, Integer>> leMap) {
+        Sheet sheet = workbook.createSheet("Summe je Firma");
+        Row row = sheet.createRow(0);
+        CaptionUtil.generateCaptions(row, "Firma", "Artikel", "Gesamtmenge", "Gesamtpreis");
+        leMap.forEach((key, value) -> value.forEach((innerKey, val) -> addRow(sheet, key, innerKey, val)));
+
     }
 
     private Map<Company, Map<Article, Integer>> createPivotMap(List<Order> orders) {

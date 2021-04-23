@@ -12,23 +12,20 @@ import java.util.List;
 
 final class OrderOverview {
 
+    private final Workbook workbook;
     private final List<Order> orders;
 
-    OrderOverview(List<Order> orders) {
+    OrderOverview(Workbook workbook, List<Order> orders) {
+        this.workbook = workbook;
         this.orders = orders;
     }
 
-    void createOverview() throws IOException {
-        try (
-            final Workbook orderOverviewSummary = new XSSFWorkbook();
-            final FileOutputStream fileOut = new FileOutputStream("order_overview_complete.xlsx")
-        ) {
-            Sheet sheet = orderOverviewSummary.createSheet("Bestellungen");
+    void createOverview() {
+            Sheet sheet = workbook.createSheet("Einzelposten");
             Row row = sheet.createRow(0);
-            CaptionUtil.generateCaptions(row, "Firma", "Abteilung", "Artikel", "Menge", "Einzelpreis", "Gesamtpreis");
+            CaptionUtil.generateCaptions(row,
+                "Firma", "Abteilung", "Artikel", "Menge", "Einzelpreis", "Gesamtpreis");
             generateColumns(orders, sheet);
-            orderOverviewSummary.write(fileOut);
-        }
     }
 
     private void generateColumns(List<Order> orders, Sheet sheet) {
